@@ -23,6 +23,7 @@ word: _ O _ D O _
 - Determine what type of ASCII art your team would like to utilize - be creative!
 - Think through how you think you should structure your code. Your code should utilize class(es) and methods to keep functionality contained.
 - Create a program that will accept one user guess input and print it out in the terminal.
+- Complete the GitHub setup, including create a team branch on the project master as well as creating one team fork
 
 ## Primary Requirements
 ### Game play
