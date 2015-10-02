@@ -9,7 +9,7 @@ class WordGuess
 		@wrong_answers = []
 		@count_wrong = 0
 		@blank_row = "_ " * @hidden_word.length
-		@answer_output = @blank_row.split(' ')
+		@answer_array = @blank_row.split(' ')
 	
 		introduction = <<YES
 			     <----->
@@ -30,42 +30,42 @@ class WordGuess
 
 YES
 
-		puts introduction 
+		puts introduction.colorize(:red)
 		puts @blank_row.center(65)
 		puts user_input
 	end
 
 	def user_input
-		until @hidden_word_array == @answer_output
+		while @hidden_word_array != @answer_array
 			puts ascii_art
 
 			puts "\n Enter a letter to guess. Try not to guess wrong."
-			puts "Right guesses: #{@right_answers}."
-			puts "Wrong guesses: #{@wrong_answers}"
 
-			@letter = gets.chomp.downcase
+			@user_guess = gets.chomp.downcase
 
 			puts check_user_input
 
 			# while @wrong_answers.length < MAX_GUESSES
-			if @hidden_word_array.include?(@letter)
+			if @hidden_word_array.include?(@user_guess)
 				# times_in_array = @hidden_word_array.count(letter)
 				# add_letters = [letter] * times_in_array
 				# @right_answers += add_letters
 
-				@hidden_word_array.each_index do |x|
-					if @hidden_word_array[x] == @letter
-						@answer_output[x] = @letter
+				@hidden_word_array.each_index do |letter|
+					if @hidden_word_array[letter] == @user_guess
+						@answer_array[letter] = @user_guess
 					end
 				end
 
 			else
 				puts "Nope! That's not right!"
 				@count_wrong += 1
-				@wrong_answers << @letter
+				@wrong_answers << @user_guess
 			end
-
-			puts @answer_output.join(' ')
+			
+			puts "Right guesses: #{@right_answers}."
+			puts "Wrong guesses: #{@wrong_answers}"
+			puts @answer_array.join(' ')
 		end
 
 		puts "You have won"
@@ -74,9 +74,9 @@ YES
 	def check_user_input
 		# Check to see if this is a number or a letter or what it is
 		# Maybe update this to take regex? 
-		while @letter.length > 1 || @letter.to_i != 0 || @letter == "0"
+		while @user_guess.length > 1 || @user_guess.to_i != 0 || @user_guess == "0"
 			puts "Please put a valid input! Robots don't like invalid inputs."
-			@letter = gets.chomp.downcase
+			@user_guess = gets.chomp.downcase
 		end
 	end
 
