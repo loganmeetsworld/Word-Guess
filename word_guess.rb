@@ -1,5 +1,7 @@
 require "colorize"
 
+LINE_WIDTH = 66
+
 class WordGuess
 	def initialize
 		@words = ["test"]
@@ -12,26 +14,15 @@ class WordGuess
 		@answer_array = @blank_row.split(' ')
 	
 		introduction = <<YES
-			     <----->
-   			    <  (0)  >
-   			    |       |
-   			   < ------- >
-   			   o         o
-   			   o ()  ()  o
-   			  o           o
-   			o o o o o o o o o
-   			o o o o o o o o o
-   			o o o o o o o o o
-
 	The robots are coming to 'TERMINATE' mankind!
-	Please help us guess the word before we all perish.
+	Please help us guess the word before we all perish.\n
 	We have given you blank spaces to make things easier.
 	We hear humans like to do it the easy way.\n
 
 YES
 
 		puts introduction.colorize(:red)
-		puts @blank_row.center(65)
+		puts @blank_row.center(LINE_WIDTH)
 		puts user_input
 	end
 
@@ -41,15 +32,12 @@ YES
 
 			puts "\n Enter a letter to guess. Try not to guess wrong."
 
-			@user_guess = gets.chomp.downcase
+			@user_guess = gets.chomp.downcase # The first time we initialize this, why!?!?
 
 			puts check_user_input
 
-			# while @wrong_answers.length < MAX_GUESSES
 			if @hidden_word_array.include?(@user_guess)
-				# times_in_array = @hidden_word_array.count(letter)
-				# add_letters = [letter] * times_in_array
-				# @right_answers += add_letters
+				@right_answers << @user_guess
 
 				@hidden_word_array.each_index do |letter|
 					if @hidden_word_array[letter] == @user_guess
@@ -62,19 +50,20 @@ YES
 				@count_wrong += 1
 				@wrong_answers << @user_guess
 			end
-			
-			puts "Right guesses: #{@right_answers}."
-			puts "Wrong guesses: #{@wrong_answers}"
-			puts @answer_array.join(' ')
+
+			puts "Right guesses: #{@right_answers}"
+			puts "Wrong guesses: #{@wrong_answers}\n"
+			puts @answer_array.join(' ').center(LINE_WIDTH)
+			print %x{clear}
 		end
 
-		puts "You have won"
+		puts "NOOOOOOO YOU BESTED THE ROBOTS!".colorize(:green).center(LINE_WIDTH)
 	end
 
 	def check_user_input
 		# Check to see if this is a number or a letter or what it is
 		# Maybe update this to take regex? 
-		while @user_guess.length > 1 || @user_guess.to_i != 0 || @user_guess == "0"
+		while @user_guess.length > 1 || @user_guess.to_i != 0 || @user_guess == ""
 			puts "Please put a valid input! Robots don't like invalid inputs."
 			@user_guess = gets.chomp.downcase
 		end
@@ -82,11 +71,25 @@ YES
 
 	def ascii_art
 		case @count_wrong
+		when 0
+			puts "
+			     <----->
+   			    <  (0)  >
+   			    |       |
+   			   < ------- > 
+   			   o         o
+   			   o ()  ()  o
+   			  o           o
+   			o o o o o o o o o
+   			o o o o o o o o o
+   			o o o o o o o o o".colorize(:red)
+puts "YOU HAVEN'T MESSED UP YET, TOO BAD.".center(LINE_WIDTH).colorize(:red)
 		when 1
 			puts "
-		 	  (\\____/)
+		 	(\\____/)
 		       (_oo_)
 		         (O)
+		     MWAHAHAHAHAH
 		  ".colorize(:yellow)
 		when 2
 			puts "
@@ -94,7 +97,7 @@ YES
            (_oo_)
              (O)
            __||__    \\)
-
+		YESSS KEEP MAKING MISTAKES!
 			".colorize(:yellow)
 		when 3
 			puts "
@@ -104,6 +107,7 @@ YES
            __||__    \\)
           /______\\[] /
           \\______/ \\/
+   HUMAN KIND WILL SOON BE MINE!
 			".colorize(:magenta)
 		when 4
 			puts "
@@ -115,6 +119,7 @@ YES
         / \\______/ \\/
        /    
       (\\    	
+ SERIOUSLY? HUMANS ARE SO STUPID!
 			".colorize(:magenta)
 		when 5
 			puts "
@@ -126,6 +131,7 @@ YES
         / \\______/ \/
        /    /__\\ 
       (\\   /____\\ 
+    	DEATH IS IMMINENT!
 			".colorize(:red)
 		when 6
 			puts "
@@ -145,7 +151,7 @@ YES
  #######  ###  ##    ###     ###  ##  #####  ##   ##  ###  ## ###  ## #####   
                              ###             ##                     #        
 			".colorize(:red).blink
-				
+			exit!
 		end
 	end
 end
