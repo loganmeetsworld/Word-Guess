@@ -22,7 +22,7 @@ class WordGuess
 	The robots are coming to 'TERMINATE' mankind!
 	Please help us guess the word before we all perish.\n
 	We have given you blank spaces to make things easier.
-	We hear humans like to do it the easy way.\n
+	We hear humans like to do it the easy way.
 
 YES
 
@@ -32,7 +32,8 @@ YES
 	end
 
 	def user_input
-		while @hidden_word != @user_guess || @hidden_word_array != @answer_array 
+
+		while @hidden_word != @user_guess && @hidden_word_array != @answer_array
 			puts ascii_art
 
 			puts "Enter a letter to guess. Try not to guess wrong."
@@ -80,7 +81,7 @@ YES
 	def sanitize_input
 		# Check to see if this is a number or a letter or what it is
 		# Maybe update this to take regex? 
-		while @user_guess[/^[a-zA-Z]*/] != @user_guess
+		while @user_guess[/^[a-zA-Z]+/] != @user_guess
 			puts "Please put a valid input! Robots don't like invalid inputs."
 			@user_guess = gets.chomp.upcase
 		end
@@ -110,4 +111,17 @@ YES
 	end
 end
 
-WordGuess.new
+keep_playing = true 
+
+while keep_playing == true
+	WordGuess.new
+	puts "Would you like to play again?"
+	response = gets.chomp.upcase
+
+	case response
+	when "Y", "YES", "SURE"
+	else 
+		keep_playing = false
+	end
+	# Ask for input, if no keep_playing is false, and exit
+end
