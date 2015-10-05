@@ -33,7 +33,7 @@ YES
 
 	def user_input
 
-		while @hidden_word != @user_guess && @hidden_word_array != @answer_array
+		while @count_wrong < 6 && @hidden_word != @user_guess && @hidden_word_array != @answer_array
 			puts ascii_art
 
 			puts "Enter a letter to guess. Try not to guess wrong."
@@ -42,9 +42,6 @@ YES
 
 			puts sanitize_input
 
-			if @hidden_word == @user_guess
-				break
-			end
 			if @right_answers.include?(@user_guess)
 				print %x{clear}
 				puts "Really, human? You already guessed that!".center(LINE_WIDTH)
@@ -74,8 +71,15 @@ YES
 			puts @answer_array.join(' ').center(LINE_WIDTH)
 		end
 		print %x{clear}
-		puts ASCII_WIN.colorize(:green).blink
-		puts "NOOOOOOO YOU BESTED THE ROBOTS! TOO BAD FOR ROBOTS".colorize(:green).blink.center(LINE_WIDTH + 20)
+		
+		if @count_wrong == 6 
+			puts "Stupid human! The word was '#{@hidden_word.upcase}'!".center(LINE_WIDTH)
+			puts
+			puts ASCII_6.colorize(:red).blink.center(LINE_WIDTH + 30)
+		else
+			puts ASCII_WIN.colorize(:green).blink
+			puts "NOOOOOOO YOU BESTED THE ROBOTS! TOO BAD FOR ROBOTS".colorize(:green).blink.center(LINE_WIDTH + 20)
+		end
 	end
 
 	def sanitize_input
@@ -101,12 +105,6 @@ YES
 			puts ASCII_4.colorize(:magenta).center(LINE_WIDTH)
 		when 5
 			puts ASCII_5.colorize(:red).center(LINE_WIDTH)
-		when 6
-			puts
-			puts "Stupid human! The word was '#{@hidden_word.upcase}'!".center(LINE_WIDTH)
-			puts
-			puts ASCII_6.colorize(:red).blink.center(LINE_WIDTH + 30)
-			exit!
 		end
 	end
 end
@@ -115,8 +113,9 @@ keep_playing = true
 
 while keep_playing == true
 	WordGuess.new
-	puts "Would you like to play again?"
+	print "Would you like to play again? > ".colorize(:yellow)
 	response = gets.chomp.upcase
+	print %x{clear}
 
 	case response
 	when "Y", "YES", "SURE"
