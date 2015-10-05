@@ -106,7 +106,6 @@ YES
 			puts "Stupid human! The word was '#{@hidden_word.upcase}'!".center(LINE_WIDTH)
 			puts
 			puts ASCII_6.colorize(:red).blink.center(LINE_WIDTH + 30)
-			exit!
 		end
 	end
 end
