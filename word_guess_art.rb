@@ -1,64 +1,73 @@
-introduction = <<YES
-The robots are coming to 'TERMINATE' mankind!
-Please help us guess the word before we all perish.
+ASCII_0 = """
+                           <----->
+                          <  (0)  >
+                          |       |
+                         < ------- > 
+                         o         o
+                         o ()  ()  o
+                        o           o
+                      o o o o o o o o o
+                      o o o o o o o o o
+                      o o o o o o o o o
 
-YES
+    YOU HAVEN'T MESSED UP YET, TOO BAD FOR ROBOTS BEEP BOOP.
+"""
 
 ASCII_1 = """
-               	  (\\____/)
-                     (_oo_)
-                       (O)
+                     	  (\\____/)
+                           (_oo_)
+                             (O)
 
-            YES PLEASE LOSE MORE HUMAN!
+                YES PLEASE LOSE MORE HUMAN!
 """
 
 
 ASCII_2 = """
-               	  (\\____/)
-                     (_oo_)
-                       (O)
-                     __||__    \\)
+                       	   (\\____/)
+                             (_oo_)
+                               (O)
+                             __||__    \\)
 
-          YOU ARE SO BAD AT YOUR OWN LANGUAGE.
-          I AM GOOD AT MINE 01110010100100101.
+              YOU ARE SO BAD AT YOUR OWN LANGUAGE.
+              I AM GOOD AT MINE 01110010100100101.
 """
 
 ASCII_3 = """
-               	  (\\____/)
-                     (_oo_)
-                       (O)
-                     __||__    \\)
-                    /______\\[] /
-                    \\______/ \\/
+                           (\\____/)
+                             (_oo_)
+                               (O)
+                             __||__    \\)
+                            /______\\[] /
+                            \\______/ \\/
 
-            MAYBE THIS YOU CAN UNDERSTAND:
-                  LOLOLOOLOLOLOLOL
+                    MAYBE THIS YOU CAN UNDERSTAND:
+                          LOLOLOOLOLOLOLOL
 """
 
 ASCII_4 = """
-               	  (\\____/)
-                     (_oo_)
-                       (O)
-                     __||__    \\)
-                  []/______\\[] /
-                  / \\______/ \\/
-                 /    
-                (\\    
+                             (\\____/)
+                               (_oo_)
+                                 (O)
+                               __||__    \\)
+                            []/______\\[] /
+                            / \\______/ \\/
+                           /    
+                          (\\    
 
-            DO YOU EVEN WORD_GUESS, BRO?
+                      DO YOU EVEN WORD_GUESS, BRO?
 """
 
 ASCII_5 = """
-               	  (\\____/)
-                     (_oo_)
-                       (O)
-                     __||__    \\)
-                  []/______\[] /
-                  / \\______/ \/
-                 /    /__\\ 
-                (\\   /____\\ 
-                  
-                DEATH IS IMMINENT!
+                             (\\____/)
+                               (_oo_)
+                                 (O)
+                               __||__    \\)
+                            []/______\[] /
+                            / \\______/ \/
+                           /    /__\\ 
+                          (\\   /____\\ 
+                            
+                          DEATH IS IMMINENT!
 """
 
 ASCII_6 = """
@@ -77,4 +86,18 @@ ASCII_6 = """
  ###      ###  ##    ###     ###  ## ###  ## ## # ##  ###  ## ### ###    ###  
  #######  ###  ##    ###     ###  ##  #####  ##   ##  ###  ## ###  ## #####   
                              ###             ##                     #         
+"""
+
+ASCII_WIN = """
+                           ((--| o |-| o |--))
+                              !-----@-----!
+                                  |--|
+                          (-)==={+++++++}===(-)
+                                {-------}
+                                {+++++++}
+                                |_______|
+                                |__| |__|
+                                |__| |__|
+                             <_____) (_____>
+
 """

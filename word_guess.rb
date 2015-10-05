@@ -1,12 +1,17 @@
 require "colorize"
+require "./word_guess_art.rb"
 
-LINE_WIDTH = 66
+LINE_WIDTH = 70
 
 class WordGuess
 	def initialize
-		@words = ["test"]
-		@hidden_word = @words[rand(@words.length)]
-		@hidden_word_array = @hidden_word.split('')
+		@words = ["terminate", "robot", "bot", "binary", "computer", "algorithm", 
+							"keyboard", "logic", "laptop", "QWERTY", "memory", "unix",
+							"encrypt", "bandwidth", "malware", "security", "dalek", "email",
+							"motherboard", "interface", "ram", "firewall", "git", "web"
+							]
+		@hidden_word = @words[rand(@words.length)].upcase
+		@hidden_word_array = @hidden_word.upcase.split('')
 		@right_answers = []
 		@wrong_answers = []
 		@count_wrong = 0
@@ -27,133 +32,82 @@ YES
 	end
 
 	def user_input
-		while @hidden_word_array != @answer_array
+		while @hidden_word != @user_guess || @hidden_word_array != @answer_array 
 			puts ascii_art
 
-			puts "\n Enter a letter to guess. Try not to guess wrong."
+			puts "Enter a letter to guess. Try not to guess wrong."
 
-			@user_guess = gets.chomp.downcase # The first time we initialize this, why!?!?
+			@user_guess = gets.chomp.upcase # The first time we initialize this, why!?!?
 
-			puts check_user_input
+			puts sanitize_input
 
-			if @hidden_word_array.include?(@user_guess)
+			if @hidden_word == @user_guess
+				break
+			end
+			if @right_answers.include?(@user_guess)
+				print %x{clear}
+				puts "Really, human? You already guessed that!".center(LINE_WIDTH)
+				puts
+			elsif @hidden_word_array.include?(@user_guess)
 				@right_answers << @user_guess
 
 				@hidden_word_array.each_index do |letter|
 					if @hidden_word_array[letter] == @user_guess
 						@answer_array[letter] = @user_guess
 					end
+					print %x{clear}
 				end
-
+			elsif @wrong_answers.include?(@user_guess)
+				print %x{clear}
+				puts "Really, human? You already guessed that!".center(LINE_WIDTH)
+				puts
 			else
-				puts "Nope! That's not right!"
 				@count_wrong += 1
 				@wrong_answers << @user_guess
+				print %x{clear}
+				puts "Nope! That's not right!"
 			end
 
 			puts "Right guesses: #{@right_answers}"
 			puts "Wrong guesses: #{@wrong_answers}\n"
 			puts @answer_array.join(' ').center(LINE_WIDTH)
-			print %x{clear}
 		end
-
-		puts "NOOOOOOO YOU BESTED THE ROBOTS!".colorize(:green).center(LINE_WIDTH)
+		print %x{clear}
+		puts ASCII_WIN.colorize(:green).blink
+		puts "NOOOOOOO YOU BESTED THE ROBOTS! TOO BAD FOR ROBOTS".colorize(:green).blink.center(LINE_WIDTH + 20)
 	end
 
-	def check_user_input
+	def sanitize_input
 		# Check to see if this is a number or a letter or what it is
 		# Maybe update this to take regex? 
-		while @user_guess.length > 1 || @user_guess.to_i != 0 || @user_guess == ""
+		while @user_guess[/^[a-zA-Z]*/] != @user_guess
 			puts "Please put a valid input! Robots don't like invalid inputs."
-			@user_guess = gets.chomp.downcase
+			@user_guess = gets.chomp.upcase
 		end
 	end
 
 	def ascii_art
 		case @count_wrong
 		when 0
-			puts "
-			     <----->
-   			    <  (0)  >
-   			    |       |
-   			   < ------- > 
-   			   o         o
-   			   o ()  ()  o
-   			  o           o
-   			o o o o o o o o o
-   			o o o o o o o o o
-   			o o o o o o o o o".colorize(:red)
-puts "YOU HAVEN'T MESSED UP YET, TOO BAD.".center(LINE_WIDTH).colorize(:red)
+			puts ASCII_0.center(LINE_WIDTH).colorize(:red)
 		when 1
-			puts "
-		 	(\\____/)
-		       (_oo_)
-		         (O)
-		     MWAHAHAHAHAH
-		  ".colorize(:yellow)
+			puts ASCII_1.colorize(:yellow).center(LINE_WIDTH)
 		when 2
-			puts "
-     	  (\\____/)
-           (_oo_)
-             (O)
-           __||__    \\)
-		YESSS KEEP MAKING MISTAKES!
-			".colorize(:yellow)
+			puts ASCII_2.colorize(:yellow).center(LINE_WIDTH)
 		when 3
-			puts "
-				(\\____/)
-           (_oo_)
-             (O)
-           __||__    \\)
-          /______\\[] /
-          \\______/ \\/
-   HUMAN KIND WILL SOON BE MINE!
-			".colorize(:magenta)
+			puts ASCII_3.colorize(:magenta).center(LINE_WIDTH)
 		when 4
-			puts "
-				(\\____/)
-           (_oo_)
-             (O)
-           __||__    \\)
-        []/______\\[] /
-        / \\______/ \\/
-       /    
-      (\\    	
- SERIOUSLY? HUMANS ARE SO STUPID!
-			".colorize(:magenta)
+			puts ASCII_4.colorize(:magenta).center(LINE_WIDTH)
 		when 5
-			puts "
-				(\\____/)
-           (_oo_)
-             (O)
-           __||__    \\)
-        []/______\[] /
-        / \\______/ \/
-       /    /__\\ 
-      (\\   /____\\ 
-    	DEATH IS IMMINENT!
-			".colorize(:red)
+			puts ASCII_5.colorize(:red).center(LINE_WIDTH)
 		when 6
-			puts "
-						  (\\____/)
-			           (_oo_)
-			             (O)
-			           __||__    \\)
-			        []/______\[] /
-			        / \\______/ \/
-			       /    /__\\ 
-			      (\\   /____\\ 
-
-######## ######## ########   ###  ## ###  ## ##   ## ######## ###  ##     ####
-               ##    ###     ###  ## ###  ## ### ###       ## #### ##    ###  
- #######  #######    ###     ####### ###  ## #######  ####### #######    ###  
- ###      ###  ##    ###     ###  ## ###  ## ## # ##  ###  ## ### ###    ###  
- #######  ###  ##    ###     ###  ##  #####  ##   ##  ###  ## ###  ## #####   
-                             ###             ##                     #        
-			".colorize(:red).blink
+			puts
+			puts "Stupid human! The word was '#{@hidden_word.upcase}'!".center(LINE_WIDTH)
+			puts
+			puts ASCII_6.colorize(:red).blink.center(LINE_WIDTH + 30)
 			exit!
 		end
 	end
 end
 
-w = WordGuess.new
+WordGuess.new
